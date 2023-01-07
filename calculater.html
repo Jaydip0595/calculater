@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculater</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <style>
+        *{
+            margin: 0;
+            padding:0;
+            box-sizing: border-box;
+        }
+        body{
+            min-height: 100vh;
+            background-color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .calculater{
+            width: 300px;
+            height: 500px;
+            box-shadow: 4px 4px 30px black;
+            border-radius: 12px;
+            background: black;
+            overflow: hidden;
+
+        }
+        form input{ 
+            width: 100%;
+            height: 75px;
+            border: none;
+            border-radius: 12px;
+            font-size: 2rem;
+            padding: 1rem;
+            color: white;
+            background: black;
+            text-align: right;
+            pointer-events: none;
+
+        }
+        .buttons{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 20px;
+
+
+        }
+        button{
+            flex: 0 0 22%;
+            margin: 5px 0;
+            border: 1px solid black;
+
+            width: 60px;
+            height: 52px;
+            font-size: 22px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-btn-yellow{
+            background: orangered;
+            color: white;
+        }
+        .btn-btn-green{
+            background:green ;
+            color: white;
+        }
+        .btn-btn-red{
+            background: red;
+            color: white;
+        }
+       
+    </style>
+</head>
+<body>
+    <section class="calculater">
+        <form>
+            <input type="text" class="screen" id="textboxhistry">
+            <input type="text" class="screen" id="textbox">
+        </form>
+
+        <div class="buttons">
+            <button type="button" class="btn-btn-yellow" onclick="operation(this)" >*</button>
+            <button type="button" class="btn-btn-yellow" onclick="operation(this)" >/</button>
+            <button type="button" class="btn-btn-yellow" onclick="operation(this)" >-</button>
+            <button type="button" class="btn-btn-yellow" onclick="operation(this)">+</button>
+
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">9</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">8</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)" >7</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)" >6</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)" >5</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">4</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">3</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">2</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">1</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">0</button>
+            <button type="button" class="btn-btn-grey" onclick="typenumber(this)">.</button>
+
+            <button type="button" class="btn-btn-green" onclick="calculate()" >=</button>
+            <button type="button" class="btn-btn-red" onclick="clearall()" >C</button>
+            <button type="button" class="btn-btn-red" onclick="clearone()" >B</button>
+
+        </div>
+
+
+
+
+
+    </section>
+    <script>
+        let operator ="";
+        function typenumber(ctrl)
+        {
+          let textbox = document.getElementById("textbox");
+          
+          let value =  textbox.value;
+          if(ctrl.innerText == "."){
+           if(value.indexOf(".") != -1){
+            return;
+           }
+            
+          }
+
+          let number = value + ctrl.innerText; 
+          textbox.value = number;
+        }
+
+
+        function clearall (){
+            let textbox = document.getElementById("textbox");
+            let textboxhistry = document.getElementById("textboxhistry");
+            textbox.value ="";
+            textboxhistry.value ="";
+             operator =""
+        }
+        function clearone(){
+            let textbox = document.getElementById("textbox");
+            let text = textbox.value;
+            let length = textbox.value.length;
+            if(length > 0){
+                let newtext = text.slice(0, length -1);
+                textbox.value = newtext;
+            }
+        }
+        function operation(ctrl){
+            let textbox = document.getElementById("textbox");
+            let textboxhistry = document.getElementById("textboxhistry");
+            textboxhistry.value = textbox.value;
+            textbox.value="";
+
+            operator = ctrl.innerText;
+
+        }
+        function calculate(){
+            let textbox = document.getElementById("textbox");
+            let textboxhistry = document.getElementById("textboxhistry");
+
+            let no1 = Number(textboxhistry.value);
+            let no2 = Number(textbox.value);
+
+            let answer = 0;
+            let display ="";
+            display = textboxhistry.value.concat (operator,textbox.value);
+
+            if(operator == "+")
+            {
+                answer=no1 + no2;
+                
+            }
+            else if (operator == "-") 
+            {
+                answer=no1 - no2;
+              
+            }
+            else if (operator == "*")
+            {
+                answer=no1 * no2;
+               
+            }
+            else if (operator == "/")
+            {
+                answer=no1 / no2;
+              
+            }
+            textbox.value = answer;
+            textboxhistry.value = display;
+
+        }
+        
+        
+
+            
+       
+            
+        
+
+        
+    </script>
+    
+</body>
+</html>
